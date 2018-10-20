@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+    <head>
+    <title>Inkoop Assessment Code</title>
+    </head>
+    <body>
+        
+        <h1>Number Game</h1>
+        <p>Build a game in js with following rules</p>
+        <ul>
+            <li>User has 1000 INR when he starts the game</li>
+            <li>Every try(click on start) is charged 100 INR</li>
+            <li>Game is over if user has less than 100 INR</li>
+            <li>Every try generates three random numbers, each random number is in 0-9 range</li>
+            <li>If all the numbers are odd/even (eg. 2 4 6), user gets 300 INR</li>
+            <li>If the numbers are in sequence with difference of 1 in any order (eg. 2 3 4 or 3 2 4 or 4 6 5), user gets 800 INR</li>
+            <li>If all the numbers are same (eg. 4 4 4), user gets 1000 INR</li>
+            <li>Else user gets no money</li>
+        </ul>
+       
+        <h3>Game:</h3>
+        <div>
+            <h5> The random numbers are: </h5>
+            <h4 id='randomNumber'> </h4>
+            <h5 id='message'></h5>
+            <h5>You have <span id='moneyleft'>1000</span> INR
+            <br>
+            <br>
+            <input id="1" type="button" onclick="numbergame()" value ="Start">
+        </div>    
+        <script type="text/javascript">
+            function numbergame(){
+                var moneyLeftInWallet = document.getElementById('moneyleft').innerText;
+                if(moneyLeftInWallet >= 100){
+                    var a =  Math.floor(Math.random()*9)
+                    var b =  Math.floor(Math.random()*9)
+                    var c =  Math.floor(Math.random()*9)
+                    document.getElementById('randomNumber').innerHTML=a+' '+b+' '+c;
+                    moneyLeftInWallet = moneyLeftInWallet - 100; 
+                    
+                    if(a==b && b==c && c==a){
+                        moneyLeftInWallet = moneyLeftInWallet + 1000;
+                        document.getElementById('moneyleft').innerHTML = moneyLeftInWallet;
+                        document.getElementById('message').innerHTML= "You were lucky! You got 1000 INR as all the numbers are same";
+                    }
+                    
+                    else if(((a-b)==1 || (b-a)==1) && ((c-b)==1 || (b-c)==1)){
+                        moneyLeftInWallet = moneyLeftInWallet + 800;
+                        document.getElementById('moneyleft').innerHTML = moneyLeftInWallet;
+                        document.getElementById('message').innerHTML= "You were lucky! You got 800 INR as the numbers are in sequence with difference of 1 in any order";
+                    }
+                    else if(((a-b)==1 || (b-a)==1) && ((c-b)!=1 || (b-c)!=1)){
+                        moneyLeftInWallet = moneyLeftInWallet + 800;
+                        document.getElementById('moneyleft').innerHTML = moneyLeftInWallet;
+                        document.getElementById('message').innerHTML= "You were lucky! You got 800 INR as the numbers are in sequence with difference of 1 in any order";
+                    }
+                    else if(((a-b)!=1 || (b-a)!=1) && ((c-b)==1 || (b-c)==1)){
+                        moneyLeftInWallet = moneyLeftInWallet + 800;
+                        document.getElementById('moneyleft').innerHTML = moneyLeftInWallet;
+                        document.getElementById('message').innerHTML= "You were lucky! You got 800 INR as the numbers are in sequence with difference of 1 in any order";
+                    }
+                    
+                    else if((a%2==0 && b%2==0 && c%2==0 ) || (a%2!=0 && b%2!=0 && c%2!=0 )){
+                        moneyLeftInWallet = moneyLeftInWallet + 300;
+                        document.getElementById('moneyleft').innerHTML = moneyLeftInWallet;
+                        document.getElementById('message').innerHTML= "You were lucky! You got 300 INR as all the numbers are odd/even";
+                    }
+
+                    else{
+                        document.getElementById('moneyleft').innerHTML = moneyLeftInWallet;
+                        document.getElementById('message').innerHTML= "Sorry! You got no money";
+                    }
+                }else{
+                    document.getElementById('message').innerHTML= "Game over! Refresh to play again...";
+                    document.getElementById("1").style.display = "none";
+                }
+            }
+        </script>
+    </body>
+</html>
